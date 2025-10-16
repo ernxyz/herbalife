@@ -17,6 +17,24 @@ body {
   color: #fff;
   position: fixed;
   font-weight: bold;
+  opacity: 0; /* initially hidden */
+  animation: fadeInOut 3.5s forwards; /* 4s total: 3s delay + 1s visible */
+  animation-delay: 3s;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;  /* quick fade-in from 0 to 1 in first 20% of animation */
+  }
+  70% {
+    opacity: 1;  /* remain visible till 70% */
+  }
+  100% {
+    opacity: 0;  /* fade-out from 70% to 100% */
+  }
 }
 
 #video {
