@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "Myriad Pro";
+  src: url('./assets/fonts/myriadpro.OTF');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Myriad Pro";
+}
+
+#time, #amOrPm {
+  color: #fff;
+  position: fixed;
+  font-weight: bold;
+}
+
+#video {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+/* 768x320 */
+@media (min-width: 768px) {
+  #time {
+    top: 90px;
+    left: 30px;
+    font-size: 130px;
+  }
+
+  #amOrPm {
+    top: 120px;
+    left: 45%;
+    font-size: 65px;
+  }
+
+}
+
+/* 1920x768 */
+@media (min-width: 1920px) {
+  #time {
+    top: 200px;
+    left: 90px;
+    font-size: 300px;
+  }
+
+  #amOrPm {
+    top: 280px;
+    left: 42.5%;
+    font-size: 150px;
+  }
+}
