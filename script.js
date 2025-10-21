@@ -31,15 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     newSrc = './assets/videos/600x810.mp4'; // portrait small display
   } else if (windowWidth <= 768) {
     newSrc = './assets/videos/768x320.mp4'; // small landscape display
-  } else if (windowWidth <= 1919) {
-    newSrc = './assets/videos/1920x768.mp4'; // medium billboard
-  } else {
-    // width >= 1920 — differentiate by height
-    if (window.innerHeight > 900) {
-      newSrc = './assets/videos/1920x960.mp4'; // tall large billboard
-    } else {
-      newSrc = './assets/videos/1920x768.mp4'; // wide large billboard
-    }
   }
 
 
