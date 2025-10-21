@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Video source logic
   let newSrc = '';
+  console.log(windowWidth, window.innerHeight)
   if (windowWidth <= 600) {
     newSrc = './assets/videos/600x810.mp4'; // portrait small display
   } else if (windowWidth <= 768) {
