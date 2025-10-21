@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            overflow:hidden;
+        }
+        #content-iframe{
+            object-fit: fill;
+            position: absolute;
+            right: 0px;
+            left:0px;
+            top: 0px;
+            bottom: 0px;
+            min-width: 100%;
+            min-height: 100%;
+            width: 100%;
+            height: 100vh;
+            z-index: -100;
+            background-size: cover;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Update these width/height values to match your billboard screen -->
+    <iframe id="content-iframe"
+            src="https://ernxyz.github.io/herbalife/?width=1920&height=768"
+            width="100%"
+            frameborder="0"></iframe>
+
+    <script>
+        // Or dynamically set based on screen size
+        const targetWidth = window.screen.width;  // Use screen.width for actual display
+        const targetHeight = window.screen.height;
+
+        document.getElementById('content-iframe').src =
+            `https://ernxyz.github.io/herbalife/?width=${targetWidth}&height=${targetHeight}`;
+    </script>
+</body>
+</html>
