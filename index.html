@@ -31,6 +31,7 @@
       animation: fadeInOut 3.5s forwards;
       animation-delay: 3s;
       line-height: 1;
+      transform-origin: left bottom;
     }
     @keyframes fadeInOut {
       0% { opacity: 0; }
@@ -43,16 +44,16 @@
       height: 100%;
       object-fit: fill;
     }
-    /* 600x810 (Portrait Display) - using viewport units */
+    /* 600x810 (Portrait Display) */
     .size-600x810 #time {
-      bottom: 100px;
-      left: 75px;
-      font-size: 200px;
+      bottom: 12.35%;
+      left: 12.5%;
+      font-size: 18.5vh;
     }
     .size-600x810 #amOrPm {
-      bottom: 180px;
-      left: 450px;
-      font-size: 120px;
+      bottom: 18.5%;
+      left: 70%;
+      font-size: 11.1vh;
     }
     /* 768x320 - using viewport units */
     .size-768x320 #time {
@@ -107,6 +108,7 @@
       const targetHeight = parseInt(urlParams.get('height')) || window.innerHeight;
 
       console.log('Target dimensions:', targetWidth, 'x', targetHeight);
+      console.log('Actual window size:', window.innerWidth, 'x', window.innerHeight);
 
       // Format current time
       const now = new Date();
