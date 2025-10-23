@@ -28,8 +28,6 @@
       position: fixed;
       font-weight: bold;
       opacity: 0;
-      animation: fadeInOut 3.5s forwards;
-      animation-delay: 3s;
       line-height: 1;
       transform-origin: left bottom;
     }
@@ -38,6 +36,9 @@
       20% { opacity: 1; }
       70% { opacity: 1; }
       100% { opacity: 0; }
+    }
+    .fade-anim {
+      animation: fadeInOut 3.5s forwards;
     }
     #video {
       width: 100%;
@@ -52,7 +53,7 @@
     }
     .size-600x810 #amOrPm {
       bottom: 18.5%;
-      left: 70%;
+      left: 72%;
       font-size: 11.1vh;
     }
     /* 768x320 - using viewport units */
@@ -85,7 +86,7 @@
     }
     .size-1920x960 #amOrPm {
       top: 43.75vh;
-      left: 45%;
+      left: 47%;
       font-size: 16.67vh;
     }
   </style>
@@ -100,69 +101,74 @@
     </video>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Get dimensions from URL parameters or fallback to window size
-      const urlParams = new URLSearchParams(window.location.search);
-      const targetWidth = parseInt(urlParams.get('width')) || window.innerWidth;
-      const targetHeight = parseInt(urlParams.get('height')) || window.innerHeight;
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetWidth = parseInt(urlParams.get('width')) || window.innerWidth;
+    const targetHeight = parseInt(urlParams.get('height')) || window.innerHeight;
 
-      console.log('Target dimensions:', targetWidth, 'x', targetHeight);
-      console.log('Actual window size:', window.innerWidth, 'x', window.innerHeight);
+    const timeEl = document.getElementById('time');
+    const amOrPmEl = document.getElementById('amOrPm');
+    const videoEl = document.getElementById('video');
+    const sourceEl = document.getElementById('source');
 
-      // Format current time
-      const now = new Date();
-      const timeEl = document.getElementById('time');
-      const amOrPmEl = document.getElementById('amOrPm');
-      const videoEl = document.getElementById('video');
-      const sourceEl = document.getElementById('source');
+    // 🕒 Format current time
+    const now = new Date();
+    const formattedTime = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Guayaquil',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }).format(now);
+    const [timePart, amOrPmPart] = formattedTime.split(' ');
+    timeEl.innerText = timePart;
+    amOrPmEl.innerText = amOrPmPart;
 
-      const formattedTime = new Intl.DateTimeFormat('en-US', {
-        timeZone: 'America/Guayaquil',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-      }).format(now);
+    // 🎬 Determine correct video & size class
+    let newSrc = '';
+    let sizeClass = '';
 
-      const [timePart, amOrPmPart] = formattedTime.split(' ');
-      timeEl.innerText = timePart;
-      amOrPmEl.innerText = amOrPmPart;
-
-      // Determine video source and size class based on target dimensions
-      let newSrc = '';
-      let sizeClass = '';
-
-      if (targetWidth <= 600) {
-        newSrc = './assets/videos/600x810.mp4';
-        sizeClass = 'size-600x810';
-      } else if (targetWidth <= 768) {
-        newSrc = './assets/videos/768x320.mp4';
-        sizeClass = 'size-768x320';
-      } else if (targetWidth <= 1919) {
+    if (targetWidth <= 600) {
+      newSrc = './assets/videos/600x810.mp4';
+      sizeClass = 'size-600x810';
+    } else if (targetWidth <= 768) {
+      newSrc = './assets/videos/768x320.mp4';
+      sizeClass = 'size-768x320';
+    } else if (targetWidth <= 1919) {
+      newSrc = './assets/videos/1920x768.mp4';
+      sizeClass = 'size-1920x768';
+    } else {
+      if (targetHeight > 900) {
+        newSrc = './assets/videos/1920x960.mp4';
+        sizeClass = 'size-1920x960';
+      } else {
         newSrc = './assets/videos/1920x768.mp4';
         sizeClass = 'size-1920x768';
-      } else {
-        if (targetHeight > 900) {
-          newSrc = './assets/videos/1920x960.mp4';
-          sizeClass = 'size-1920x960';
-        } else {
-          newSrc = './assets/videos/1920x768.mp4';
-          sizeClass = 'size-1920x768';
-        }
       }
+    }
 
-      // Apply size class to body
-      document.body.className = sizeClass;
-      console.log('Selected video:', newSrc, '| Size class:', sizeClass);
+    document.body.className = sizeClass;
 
-      // Load video
-      if (sourceEl.src !== newSrc) {
-        videoEl.pause();
-        sourceEl.src = newSrc;
-        videoEl.load();
-        videoEl.play();
-      }
+    // 🧠 Replace video source only if different
+    if (sourceEl.src !== newSrc) {
+      videoEl.pause();
+      sourceEl.src = newSrc;
+      videoEl.load();
+    }
+
+    // 🛡️ Wait until video *actually starts playing*
+    videoEl.addEventListener('playing', () => {
+      console.log('✅ Video started, triggering animations...');
+      // Delay the appearance (e.g. 3s after playback starts)
+      setTimeout(() => {
+        timeEl.classList.add('fade-anim');
+        amOrPmEl.classList.add('fade-anim');
+      }, 3000);
     });
-  </script>
+
+    videoEl.play().catch(err => console.warn('Autoplay issue:', err));
+  });
+</script>
+
 </body>
 </html>
